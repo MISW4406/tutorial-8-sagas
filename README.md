@@ -1,4 +1,4 @@
-# Tutorial 7 - Event Sourcing
+# Tutorial 8 - Sagas
 
 Repositorio con código base con la implementación de un servicio usando el patrón Event Sourcing.
 
