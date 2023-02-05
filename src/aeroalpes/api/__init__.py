@@ -61,6 +61,9 @@ def create_app(configuracion={}):
         db.create_all()
         if not app.config.get('TESTING'):
             comenzar_consumidor(app)
+        
+        from aeroalpes.modulos.sagas.aplicacion.coordinadores.saga_reservas import CoordinadorReservas
+        CoordinadorReservas()
 
      # Importa Blueprints
     from . import hoteles
