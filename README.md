@@ -165,6 +165,31 @@ Desde el directorio principal ejecute el siguiente comando.
 docker run aeroalpes/ui
 ```
 
+## Microservicio: Clientes
+
+Desde el directorio `src` ejecute el siguiente comando
+
+```bash
+uvicorn cliente.main:app --host localhost --port 8000 --reload
+```
+
+## Microservicio: Pagos
+
+Desde el directorio `src` ejecute el siguiente comando
+
+```bash
+uvicorn pagos.main:app --host localhost --port 8001 --reload
+```
+
+## Microservicio: Integración GDS
+
+Desde el directorio `src` ejecute el siguiente comando
+
+```bash
+uvicorn integracion_gds.main:app --host localhost --port 8002 --reload
+```
+
+
 ## CDC & Debezium
 
 **Nota**: Antes de poder ejectuar todos los siguientes comandos DEBE tener la base de datos MySQL corriendo.

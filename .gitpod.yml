@@ -10,7 +10,7 @@ tasks:
       gp sync-done bundle
   - name: Instalar dependencias
     init: gp sync-await bundle
-    command: pip install -r requirements.txt && pip install -r sidecar-requirements.txt && pip install -r ui-requirements.txt
+    command: pip install -r requirements.txt && pip install -r sidecar-requirements.txt && pip install -r ui-requirements.txt && pip install -r cliente-requirements.txt
   - name: Crear imagenes Docker
     init: > 
       docker build . -f aeroalpes.Dockerfile -t aeroalpes/flask &&

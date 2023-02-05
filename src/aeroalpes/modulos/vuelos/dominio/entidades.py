@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 import datetime
 
 import aeroalpes.modulos.vuelos.dominio.objetos_valor as ov
-from aeroalpes.modulos.vuelos.dominio.eventos import ReservaCreada, ReservaAprobada, ReservaCancelada, ReservaPagada
+from aeroalpes.modulos.vuelos.dominio.eventos.reservas import ReservaCreada, ReservaAprobada, ReservaCancelada, ReservaPagada
 from aeroalpes.seedwork.dominio.entidades import Locacion, AgregacionRaiz, Entidad
 
 @dataclass
