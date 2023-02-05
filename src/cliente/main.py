@@ -26,14 +26,11 @@ async def app_startup():
 @app.on_event("shutdown")
 def shutdown_event():
     global tasks
-    try:
-        for task in tasks:
-            task.cancel()
-    except:
-        print('asasasa')
+    for task in tasks:
+        task.cancel()
 
 @app.get("/prueba-usuario-validado", include_in_schema=False)
-async def health() -> dict[str, str]:
+async def prueba_usuario_validado() -> dict[str, str]:
     payload = UsuarioValidado(id = "1232321321", fecha_validacion = utils.time_millis())
     evento = EventoUsuario(
         time=utils.time_millis(),
@@ -46,7 +43,7 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 @app.get("/prueba-usuario-registrado", include_in_schema=False)
-async def health() -> dict[str, str]:
+async def prueba_usuario_registrado() -> dict[str, str]:
     payload = UsuarioRegistrado(
         id = "1232321321", 
         nombres = "Juan",
@@ -66,7 +63,7 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 @app.get("/prueba-usuario-desactivado", include_in_schema=False)
-async def health() -> dict[str, str]:
+async def prueba_usuario_desactivado() -> dict[str, str]:
     payload = UsuarioDesactivado(id = "1232321321", fecha_validacion = utils.time_millis())
     evento = EventoUsuario(
         time=utils.time_millis(),

@@ -2,17 +2,17 @@ from pulsar.schema import *
 from .utils import time_millis
 import uuid
 
-from enum import Enum
-
 class ReservaPagada(Record):
-    id = String()
+    id = String(),
+    id_correlacion = String(),
     reserva_id = String()
     monto = Double()
     monto_vat = Double()
     fecha_creacion = Long()
-
+ 
 class PagoRevertido(Record):
     id = String()
+    id_correlacion = String()
     reserva_id = String()
     fecha_actualizacion = Long()
 
