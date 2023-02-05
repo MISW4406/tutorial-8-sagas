@@ -43,6 +43,7 @@ class CoordinadorReservas(CoordinadorOrquestacion):
         ...
 
 
+# TODO Agregue un Listener/Handler para que se puedan redireccionar eventos de dominio
 def oir_mensaje(mensaje):
     if isinstance(mensaje, EventoDominio):
         coordinador = CoordinadorReservas()
