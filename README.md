@@ -1,17 +1,20 @@
 # Tutorial 8 - Sagas
 
-Repositorio con código base con la implementación de un servicio usando el patrón Event Sourcing.
+Repositorio con código base para la implentación del patrón Saga usando orquestación como mecanismo de coordinación.
 
-Este repositorio está basado en el repositorio de liberación de datos visto en el tutorial 6 del curso. Por tal motivo, puede usar ese mismo repositorio para entender algunos detalles que este README no cubre.
+Este repositorio está basado en el repositorio de Event Sourcing visto en el tutorial 7 del curso. Por tal motivo, puede usar ese mismo repositorio para entender algunos detalles que este README no cubre.
 
 ## Estructura del proyecto
 
-Este repositorio sigue en general la misma estructura del repositorio de origen. Sin embargo, hay un par de adiciones importante mencionar:
+Este repositorio sigue en general la misma estructura del repositorio de origen. Sin embargo, la estructura de nuestro proyecto de AeroAlpes ha cambiado considerablemente, puesto que se ha desmantelado el monolito en multiples microservicios. A continuación puede ver la nueva estructura:
 
-- El archivo **src/aeroalpes/config/uow.py** ahora incluye una unidad de trabajo para Pulsar, esta nos va ayudar a mantener la consistencia transaccional en el servicio usando Apache Pulsar como nuestro Event Store.
-- El archivo **src/aeroalpes/modulos/vuelos/infraestructura/proyecciones.py** cuenta con las diferentes formas en que podemos hacer proyección de nuestros datos. Una de las proyecciones tiene propósitos analíticos y la otra transaccionales.
-- El archivo **src/aeroalpes/modulos/vuelos/infraestructura/vistas.py** cuenta con el modelo de vistas que podemos exponer a nuestro clientes. Como se puede observar, este es un modelo bastante genérico definido en el seedwork (pero usted puede hacerlo mucho más complejo).
-- Los archivos **src/aeroalpes/seedwork/infraestructura/proyecciones.py** y **src/aeroalpes/seedwork/infraestructura/vistas.py** proveen las interfaces y definiciones genéricas para las proyecciones, handlers y vistas.
+- El directorio **src/cliente/** ahora incluye todas las clases y archivos que constituyen el contexto del manejo de usuarios.
+- El directorio **src/integracion_gds/** ahora incluye todas las clases y archivos que constituyen el contexto con la integración con GDS.
+- El directorio **src/pagos/** ahora incluye todas las clases y archivos que constituyen el contexto de pagos.
+- El proyecto `aeroalpes` ahora cuenta con un nuevo módulo para el manejo de sagas **src/aeroalpes/modulos/sagas/**. Este módulo sigue los mismos estándares de los demás módulos.
+    - Módulo `aplicacion` que cuenta con código de los `comandos` para múltiples contextos fuera del de reservas e itinerarios.
+    - Módulo `coordinadores` que cuenta con la saga de reservas usando orquestación.
+- Los archivos **src/aeroalpes/seedwork/aplicacion/sagas.py** provee las interfaces y definiciones genéricas para la coordinación de sagas.
 
 ## AeroAlpes
 ### Ejecutar Base de datos
