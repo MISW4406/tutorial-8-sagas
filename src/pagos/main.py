@@ -32,7 +32,7 @@ app_configs: dict[str, Any] = {"title": "Pagos AeroAlpes"}
 app = FastAPI(**app_configs)
 tasks = list()
 
-@app.on_event('startup')
+@app.on_event("startup")
 async def app_startup():
     global tasks
     task1 = asyncio.ensure_future(suscribirse_a_topico("evento-pago", "sub-pagos", EventoPago))
@@ -41,6 +41,12 @@ async def app_startup():
     tasks.append(task1)
     tasks.append(task2)
     tasks.append(task3)
+
+@app.on_event("shutdown")
+def shutdown_event():
+    global tasks
+    for task in tasks:
+        task.cancel()
 
 @app.get("/prueba-reserva-pagada", include_in_schema=False)
 async def prueba_reserva_pagada() -> dict[str, str]:

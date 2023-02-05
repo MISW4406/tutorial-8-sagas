@@ -4,7 +4,8 @@ from cliente.api.v1.router import router as v1
 
 from cliente.modulos.infraestructura.consumidores import suscribirse_a_topico
 from cliente.modulos.infraestructura.v1.eventos import EventoUsuario, UsuarioValidado, UsuarioDesactivado, UsuarioRegistrado, TipoCliente
-
+from cliente.modulos.infraestructura.v1.comandos import ComandoRegistrarUsuario, ComandoValidarUsuario, ComandoDesactivarUsuario, RegistrarUsuario, ValidarUsuario, DesactivarUsuario
+from cliente.modulos.infraestructura.v1 import TipoCliente
 from cliente.modulos.infraestructura.despachadores import Despachador
 from cliente.seedwork.infraestructura import utils
 
@@ -17,11 +18,17 @@ import uvicorn
 app = FastAPI(**app_configs)
 tasks = list()
 
-@app.on_event('startup')
+@app.on_event("startup")
 async def app_startup():
     global tasks
-    task = asyncio.ensure_future(suscribirse_a_topico("evento-usuarios", "sub-cliente", EventoUsuario))
-    tasks.append(task)
+    task1 = asyncio.ensure_future(suscribirse_a_topico("evento-usuarios", "sub-cliente", EventoUsuario))
+    task2 = asyncio.ensure_future(suscribirse_a_topico("comando-registrar-usuario", "sub-com-registrar-usuario", ComandoRegistrarUsuario))
+    task3 = asyncio.ensure_future(suscribirse_a_topico("comando-validar-usuario", "sub-com-validar-usuario", ComandoValidarUsuario))
+    task4 = asyncio.ensure_future(suscribirse_a_topico("comando-desactivar-usuario", "sub-com-desactivar-usuario", ComandoDesactivarUsuario))
+    tasks.append(task1)
+    tasks.append(task2)
+    tasks.append(task3)
+    tasks.append(task4)
 
 @app.on_event("shutdown")
 def shutdown_event():
@@ -73,6 +80,60 @@ async def prueba_usuario_desactivado() -> dict[str, str]:
     )
     despachador = Despachador()
     despachador.publicar_mensaje(evento, "evento-usuarios")
+    return {"status": "ok"}
+
+@app.get("/prueba-registrar-usuario", include_in_schema=False)
+async def prueba_registrar_usuario() -> dict[str, str]:
+    payload = RegistrarUsuario(
+        nombres = "Juan",
+        apellidos = "Urrego",
+        email = "js.urrego110@aeroalpes.net",
+        tipo_cliente = TipoCliente.natural,
+        fecha_creacion = utils.time_millis()
+    )
+
+    comando = ComandoRegistrarUsuario(
+        time=utils.time_millis(),
+        ingestion=utils.time_millis(),
+        datacontenttype=RegistrarUsuario.__name__,
+        data = payload
+    )
+    despachador = Despachador()
+    despachador.publicar_mensaje(comando, "comando-registrar-usuario")
+    return {"status": "ok"}
+
+@app.get("/prueba-validar-usuario", include_in_schema=False)
+async def prueba_validar_usuario() -> dict[str, str]:
+    payload = ValidarUsuario(
+        id = "1232321321", 
+        fecha_validacion = utils.time_millis()
+    )
+
+    comando = ComandoValidarUsuario(
+        time=utils.time_millis(),
+        ingestion=utils.time_millis(),
+        datacontenttype=ValidarUsuario.__name__,
+        data = payload
+    )
+    despachador = Despachador()
+    despachador.publicar_mensaje(comando, "comando-validar-usuario")
+    return {"status": "ok"}
+
+@app.get("/prueba-desactivar-usuario", include_in_schema=False)
+async def prueba_desactivar_usuario() -> dict[str, str]:
+    payload = DesactivarUsuario(
+        id = "1232321321", 
+        fecha_validacion = utils.time_millis()
+    )
+
+    comando = ComandoDesactivarUsuario(
+        time=utils.time_millis(),
+        ingestion=utils.time_millis(),
+        datacontenttype=DesactivarUsuario.__name__,
+        data = payload
+    )
+    despachador = Despachador()
+    despachador.publicar_mensaje(comando, "comando-desactivar-usuario")
     return {"status": "ok"}
 
 @app.get("/health", include_in_schema=False)

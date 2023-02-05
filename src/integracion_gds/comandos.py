@@ -18,7 +18,7 @@ class ComandoConfirmarReserva(Record):
     specversion = String(default="v1")
     type = String(default="ConfirmarReserva")
     datacontenttype = String()
-    service_name = String("gds.aeroalpes")
+    service_name = String(default="gds.aeroalpes")
     data = ConfirmarReservaPayload
 
     def __init__(self, *args, **kwargs):
@@ -31,7 +31,7 @@ class ComandoRevertirConfirmacion(Record):
     specversion = String(default="v1")
     type = String(default="RevertirConfirmacion")
     datacontenttype = String()
-    service_name = String("gds.aeroalpes")
+    service_name = String(default="gds.aeroalpes")
     data = RevertirConfirmacionPayload
 
     def __init__(self, *args, **kwargs):

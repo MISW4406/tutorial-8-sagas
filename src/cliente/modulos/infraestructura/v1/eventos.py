@@ -1,13 +1,9 @@
 from pulsar.schema import *
 from cliente.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
 from cliente.seedwork.infraestructura.utils import time_millis
+from cliente.modulos.infraestructura.v1 import TipoCliente
 import uuid
 
-from enum import Enum
-
-class TipoCliente(Enum):
-    natural = 1
-    corporativo = 2
 
 
 # NOTE En este caso usamos composición de eventos, donde un evento Usuario es constituido 
@@ -37,7 +33,7 @@ class EventoUsuario(EventoIntegracion):
     specversion = String(default="v1")
     type = String(default="EventoUsuario")
     datacontenttype = String()
-    service_name = String("cliente.aeroalpes")
+    service_name = String(default="cliente.aeroalpes")
     usuario_registrado = UsuarioRegistrado
     usuario_validado = UsuarioValidado
     usuario_desactivado = UsuarioDesactivado

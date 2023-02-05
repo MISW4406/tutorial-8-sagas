@@ -23,7 +23,7 @@ class EventoPago(Record):
     specversion = String(default="v1")
     type = String(default="EventoPago")
     datacontenttype = String()
-    service_name = String("pagos.aeroalpes")
+    service_name = String(default="pagos.aeroalpes")
     reserva_pagada = ReservaPagada
     pago_revertido = PagoRevertido
 

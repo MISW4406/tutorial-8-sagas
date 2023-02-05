@@ -21,7 +21,7 @@ class ComandoPagarReserva(Record):
     specversion = String(default="v1")
     type = String(default="ComandoPagarReserva")
     datacontenttype = String()
-    service_name = String("pagos.aeroalpes")
+    service_name = String(default="pagos.aeroalpes")
     data = PagarReservaPayload
 
     def __init__(self, *args, **kwargs):
@@ -34,7 +34,7 @@ class ComandoRevertirPago(Record):
     specversion = String(default="v1")
     type = String(default="RevertirPagoReserva")
     datacontenttype = String()
-    service_name = String("pagos.aeroalpes")
+    service_name = String(default="pagos.aeroalpes")
     data = RevertirPagoPayload
 
     def __init__(self, *args, **kwargs):
