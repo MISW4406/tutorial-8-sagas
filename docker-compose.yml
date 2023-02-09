@@ -183,3 +183,51 @@ services:
       - pulsar
     ports:
       - "5678:5678"
+  # Servicio Cliente
+  cliente:
+    container_name: cliente
+    hostname: cliente
+    image: aeroalpes/cliente 
+    profiles: ["aeroalpes", "cliente"]
+    depends_on:
+      - aeroalpes
+      - broker
+    environment:
+      - AEROALPES_ADDRESS=aeroalpes
+      - BROKER_HOST=broker
+    networks:
+      - pulsar
+    ports:
+      - "8000:8000"
+  # Servicio Pagos
+  pagos:
+    container_name: pagos
+    hostname: pagos
+    image: aeroalpes/pagos 
+    profiles: ["aeroalpes", "pagos"]
+    depends_on:
+      - aeroalpes
+      - broker
+    environment:
+      - AEROALPES_ADDRESS=aeroalpes
+      - BROKER_HOST=broker
+    networks:
+      - pulsar
+    ports:
+      - "8001:8001"
+  # Servicio GDS
+  gds:
+    container_name: gds
+    hostname: gds
+    image: aeroalpes/gds 
+    profiles: ["aeroalpes", "gds"]
+    depends_on:
+      - aeroalpes
+      - broker
+    environment:
+      - AEROALPES_ADDRESS=aeroalpes
+      - BROKER_HOST=broker
+    networks:
+      - pulsar
+    ports:
+      - "8002:8002"
