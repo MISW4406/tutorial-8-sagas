@@ -1,6 +1,6 @@
 # Tutorial 8 - Sagas
 
-Repositorio con código base para la implementación del patrón Saga usando orquestación como mecanismo de coordinación.
+Repositorio con código base para la implementación del patrón Saga usando orquestación como mecanismo de orquestación.
 
 Este repositorio está basado en el repositorio de Event Sourcing visto en el tutorial 7 del curso. Por tal motivo, puede usar ese mismo repositorio para entender algunos detalles que este README no cubre.
 
