@@ -79,7 +79,7 @@ class CoordinadorOrquestacion(CoordinadorSaga, ABC):
         raise Exception("Evento no hace parte de la transacción")
                 
     def es_ultima_transaccion(self, index):
-        return len(self.pasos) - 1
+        return (len(self.pasos) - 1) == index
 
     def procesar_evento(self, evento: EventoDominio):
         paso, index = self.obtener_paso_dado_un_evento(evento)
@@ -88,6 +88,6 @@ class CoordinadorOrquestacion(CoordinadorSaga, ABC):
         elif isinstance(evento, paso.error):
             self.publicar_comando(evento, self.pasos[index-1].compensacion)
         elif isinstance(evento, paso.evento):
-            self.publicar_comando(evento, self.pasos[index+1].compensacion)
+            self.publicar_comando(evento, self.pasos[index+1].comando)
 
 
