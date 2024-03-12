@@ -14,7 +14,9 @@ from aeroalpes.modulos.sagas.dominio.eventos.gds import ReservaGDSConfirmada, Co
 
 
 class CoordinadorReservas(CoordinadorOrquestacion):
-
+    def __init__(self):
+            self.inicializar_pasos()
+        
     def inicializar_pasos(self):
         self.pasos = [
             Inicio(index=0),
