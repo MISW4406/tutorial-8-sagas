@@ -5,12 +5,16 @@ En este archivo usted encontrará las entidades del dominio de vuelos
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
+
 import datetime
+import uuid
+from dataclasses import dataclass, field
 
 import aeroalpes.modulos.vuelos.dominio.objetos_valor as ov
-from aeroalpes.modulos.vuelos.dominio.eventos.reservas import ReservaCreada, ReservaAprobada, ReservaCancelada, ReservaPagada
+from aeroalpes.modulos.vuelos.dominio.eventos.reservas import ReservaCreada, ReservaAprobada, ReservaCancelada, \
+    ReservaPagada
 from aeroalpes.seedwork.dominio.entidades import Locacion, AgregacionRaiz, Entidad
+
 
 @dataclass
 class Aeropuerto(Locacion):
@@ -26,7 +30,7 @@ class Proveedor(Entidad):
     nombre: ov.NombreAero = field(default_factory=ov.NombreAero)
     itinerarios: list[ov.Itinerario] = field(default_factory=list[ov.Itinerario])
 
-    def obtener_itinerarios(self, odos: list[Odo], parametros: ParametroBusca):
+    def obtener_itinerarios(self, odos: list[ov.Odo], parametros: ov.ParametroBusca):
         return self.itinerarios
 
 @dataclass
@@ -69,3 +73,7 @@ class Reserva(AgregacionRaiz):
 
         self.agregar_evento(ReservaPagada(self.id, self.fecha_actualizacion))
         # TODO Agregar evento de compensación
+
+
+class Itinerario:
+    ...

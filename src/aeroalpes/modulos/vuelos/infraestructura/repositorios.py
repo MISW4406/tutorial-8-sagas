@@ -5,16 +5,20 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 
 """
 
+from uuid import UUID
+
+from pulsar.schema import *
+
 from aeroalpes.config.db import db
-from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioReservas, RepositorioProveedores, RepositorioEventosReservas
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
 from aeroalpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
 from aeroalpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
-from .dto import Reserva as ReservaDTO
+from aeroalpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
+from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioReservas, RepositorioProveedores, \
+    RepositorioEventosReservas
 from .dto import EventosReserva
+from .dto import Reserva as ReservaDTO
 from .mapeadores import MapeadorReserva, MapadeadorEventosReserva
-from uuid import UUID
-from pulsar.schema import *
+
 
 class RepositorioProveedoresSQLAlchemy(RepositorioProveedores):
 

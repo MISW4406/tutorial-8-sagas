@@ -1,9 +1,10 @@
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import Odo, ParametroBusca
 from aeroalpes.modulos.vuelos.dominio.entidades import Itinerario, Proveedor
+from aeroalpes.modulos.vuelos.dominio.mixins import FiltradoItinerariosMixin
+from aeroalpes.modulos.vuelos.dominio.objetos_valor import Odo, ParametroBusca
+from aeroalpes.modulos.vuelos.dominio.reglas import MinimoUnAdulto, RutaValida
 from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioProveedores as rp
 from aeroalpes.seedwork.dominio.servicios import Servicio
-from aeroalpes.modulos.vuelos.dominio.mixins import FiltradoItinerariosMixin
-from aeroalpes.modulos.vuelos.dominio.reglas import MinimoUnAdulto, RutaValida
+
 
 class ServicioBusqueda(Servicio, FiltradoItinerariosMixin):
 

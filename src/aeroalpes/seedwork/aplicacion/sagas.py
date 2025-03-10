@@ -1,10 +1,12 @@
+import datetime
+import uuid
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
 from aeroalpes.seedwork.aplicacion.comandos import Comando
 from aeroalpes.seedwork.dominio.eventos import EventoDominio
-from dataclasses import dataclass
 from .comandos import ejecutar_commando
-import uuid
-import datetime
+
 
 class CoordinadorSaga(ABC):
     id_correlacion: uuid.UUID
@@ -17,8 +19,8 @@ class CoordinadorSaga(ABC):
     def construir_comando(self, evento: EventoDominio, tipo_comando: type) -> Comando:
         ...
 
-    def publicar_comando(self,evento: EventoDominio, tipo_comando: type):
-        comando = construir_comando(evento, tipo_comando)
+    def publicar_comando(self, evento: EventoDominio, tipo_comando: type):
+        comando = self.construir_comando(evento, tipo_comando)
         ejecutar_commando(comando)
 
     @abstractmethod
@@ -30,11 +32,11 @@ class CoordinadorSaga(ABC):
         ...
 
     @abstractmethod
-    def iniciar():
+    def iniciar(self):
         ...
     
     @abstractmethod
-    def terminar():
+    def terminar(self):
         ...
 
 class Paso():
@@ -70,7 +72,7 @@ class CoordinadorOrquestacion(CoordinadorSaga, ABC):
     index: int
     
     def obtener_paso_dado_un_evento(self, evento: EventoDominio):
-        for i, paso in enumerate(pasos):
+        for i, paso in enumerate(self.pasos):
             if not isinstance(paso, Transaccion):
                 continue
 
@@ -83,7 +85,7 @@ class CoordinadorOrquestacion(CoordinadorSaga, ABC):
 
     def procesar_evento(self, evento: EventoDominio):
         paso, index = self.obtener_paso_dado_un_evento(evento)
-        if es_ultima_transaccion(index) and not isinstance(evento, paso.error):
+        if self.es_ultima_transaccion(index) and not isinstance(evento, paso.error):
             self.terminar()
         elif isinstance(evento, paso.error):
             self.publicar_comando(evento, self.pasos[index-1].compensacion)

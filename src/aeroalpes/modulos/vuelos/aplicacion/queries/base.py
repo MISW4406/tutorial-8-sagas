@@ -1,6 +1,7 @@
-from aeroalpes.seedwork.aplicacion.queries import QueryHandler
-from aeroalpes.modulos.vuelos.infraestructura.fabricas import FabricaVista
 from aeroalpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
+from aeroalpes.modulos.vuelos.infraestructura.fabricas import FabricaVista
+from aeroalpes.seedwork.aplicacion.queries import QueryHandler
+
 
 class ReservaQueryBaseHandler(QueryHandler):
     def __init__(self):

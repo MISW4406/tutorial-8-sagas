@@ -1,7 +1,8 @@
-from aeroalpes.seedwork.infraestructura.vistas import Vista
-from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
 from aeroalpes.config.db import db
+from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
+from aeroalpes.seedwork.infraestructura.vistas import Vista
 from .dto import Reserva as ReservaDTO
+
 
 class VistaReserva(Vista):
     def obtener_por(id=None, estado=None, id_cliente=None, **kwargs) -> [Reserva]:

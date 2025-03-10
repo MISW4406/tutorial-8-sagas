@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, url_for, redirect, jsonify, session
+from flask import Flask, jsonify
 from flask_swagger import swagger
 
 # Identifica el directorio base

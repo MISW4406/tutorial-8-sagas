@@ -1,5 +1,6 @@
-from functools import singledispatch
 from abc import ABC, abstractmethod
+from functools import singledispatch
+
 
 class Comando:
     ...

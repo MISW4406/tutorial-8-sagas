@@ -4,11 +4,13 @@ En este archivo usted encontrará las clases para eventos reusables parte del se
 
 """
 
-from dataclasses import dataclass, field
-from .reglas import IdEntidadEsInmutable
-from .excepciones import IdDebeSerInmutableExcepcion
-from datetime import datetime
 import uuid
+from dataclasses import dataclass, field
+from datetime import datetime
+
+from .excepciones import IdDebeSerInmutableExcepcion
+from .reglas import IdEntidadEsInmutable
+
 
 @dataclass
 class EventoDominio():

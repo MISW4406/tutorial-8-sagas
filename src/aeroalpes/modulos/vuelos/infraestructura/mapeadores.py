@@ -5,16 +5,16 @@ encargados de la transformación entre formatos de dominio y DTOs
 
 """
 
+from aeroalpes.modulos.vuelos.dominio.entidades import Aeropuerto, Reserva
+from aeroalpes.modulos.vuelos.dominio.eventos.reservas import ReservaCancelada, ReservaAprobada, ReservaPagada, \
+    ReservaCreada, EventoReserva
+from aeroalpes.modulos.vuelos.dominio.objetos_valor import Odo, Leg, Segmento, Itinerario
 from aeroalpes.seedwork.dominio.repositorios import Mapeador
 from aeroalpes.seedwork.infraestructura.utils import unix_time_millis
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from aeroalpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
-from aeroalpes.modulos.vuelos.dominio.eventos.reservas import ReservaAprobada, ReservaCancelada, ReservaAprobada, ReservaPagada, ReservaCreada, EventoReserva
-
-from .dto import Reserva as ReservaDTO
 from .dto import Itinerario as ItinerarioDTO
+from .dto import Reserva as ReservaDTO
 from .excepciones import NoExisteImplementacionParaTipoFabricaExcepcion
-from pulsar.schema import *
+
 
 class MapadeadorEventosReserva(Mapeador):
 

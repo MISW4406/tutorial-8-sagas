@@ -1,7 +1,12 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from aeroalpes.seedwork.dominio.eventos import (EventoDominio)
+
+import uuid
+from dataclasses import dataclass
 from datetime import datetime
+
+from aeroalpes.modulos.vuelos.dominio.eventos.reservas import EventoReserva
+from aeroalpes.seedwork.dominio.eventos import (EventoDominio)
+
 
 class EventoCliente(EventoDominio):
     ...

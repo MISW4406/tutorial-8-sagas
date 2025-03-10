@@ -5,15 +5,19 @@ objetos complejos en la capa de infraestructura del dominio de vuelos
 
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+
+from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
+from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioProveedores, RepositorioReservas, \
+    RepositorioEventosReservas
+from aeroalpes.modulos.vuelos.infraestructura.vistas import VistaReserva
 from aeroalpes.seedwork.dominio.fabricas import Fabrica
 from aeroalpes.seedwork.dominio.repositorios import Repositorio
 from aeroalpes.seedwork.infraestructura.vistas import Vista
-from aeroalpes.modulos.vuelos.infraestructura.vistas import VistaReserva
-from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
-from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioProveedores, RepositorioReservas, RepositorioEventosReservas
-from .repositorios import RepositorioReservasSQLAlchemy, RepositorioProveedoresSQLAlchemy, RepositorioEventosReservaSQLAlchemy
 from .excepciones import ExcepcionFabrica
+from .repositorios import RepositorioReservasSQLAlchemy, RepositorioProveedoresSQLAlchemy, \
+    RepositorioEventosReservaSQLAlchemy
+
 
 @dataclass
 class FabricaRepositorio(Fabrica):

@@ -1,18 +1,16 @@
-import pulsar,_pulsar  
-from pulsar.schema import *
-import uuid
-import time
 import logging
 import traceback
-import datetime
 
-from aeroalpes.modulos.vuelos.infraestructura.schema.v1.eventos import EventoReservaCreada
-from aeroalpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoCrearReserva
-
+import _pulsar
+import pulsar
+from pulsar.schema import *
 
 from aeroalpes.modulos.vuelos.infraestructura.proyecciones import ProyeccionReservasLista, ProyeccionReservasTotales
-from aeroalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion
+from aeroalpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoCrearReserva
+from aeroalpes.modulos.vuelos.infraestructura.schema.v1.eventos import EventoReservaCreada
 from aeroalpes.seedwork.infraestructura import utils
+from aeroalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion
+
 
 def suscribirse_a_eventos(app=None):
     cliente = None

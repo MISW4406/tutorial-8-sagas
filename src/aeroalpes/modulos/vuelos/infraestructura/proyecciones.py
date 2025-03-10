@@ -1,16 +1,15 @@
-from aeroalpes.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
-from aeroalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion as proyeccion
-from aeroalpes.modulos.vuelos.infraestructura.fabricas import FabricaRepositorio
-from aeroalpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
-from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
-from aeroalpes.modulos.vuelos.infraestructura.dto import Reserva as ReservaDTO
-
-from aeroalpes.seedwork.infraestructura.utils import millis_a_datetime
-import datetime
 import logging
 import traceback
 from abc import ABC, abstractmethod
+
+from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
+from aeroalpes.modulos.vuelos.infraestructura.fabricas import FabricaRepositorio
+from aeroalpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
+from aeroalpes.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
+from aeroalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion as proyeccion
+from aeroalpes.seedwork.infraestructura.utils import millis_a_datetime
 from .dto import ReservaAnalitica
+
 
 class ProyeccionReserva(Proyeccion, ABC):
     @abstractmethod

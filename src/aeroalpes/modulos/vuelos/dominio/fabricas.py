@@ -5,14 +5,16 @@ objetos complejos del dominio de vuelos
 
 """
 
-from .entidades import Reserva
-from .reglas import MinimoUnItinerario, RutaValida
-from .excepciones import TipoObjetoNoExisteEnDominioVuelosExcepcion
-from aeroalpes.seedwork.dominio.repositorios import Mapeador, Repositorio
-from aeroalpes.seedwork.dominio.fabricas import Fabrica
+from dataclasses import dataclass
+
 from aeroalpes.seedwork.dominio.entidades import Entidad
 from aeroalpes.seedwork.dominio.eventos import EventoDominio
-from dataclasses import dataclass
+from aeroalpes.seedwork.dominio.fabricas import Fabrica
+from aeroalpes.seedwork.dominio.repositorios import Mapeador
+from .entidades import Reserva
+from .excepciones import TipoObjetoNoExisteEnDominioVuelosExcepcion
+from .reglas import MinimoUnItinerario, RutaValida
+
 
 @dataclass
 class _FabricaReserva(Fabrica):

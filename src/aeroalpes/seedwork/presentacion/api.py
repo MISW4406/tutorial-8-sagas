@@ -1,7 +1,5 @@
-import functools
-
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint
 )
 
 def crear_blueprint(identificador: str, prefijo_url: str):

@@ -1,6 +1,6 @@
-import time
-import os
 import datetime
+import os
+import time
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 

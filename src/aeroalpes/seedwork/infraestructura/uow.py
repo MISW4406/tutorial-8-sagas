@@ -1,12 +1,12 @@
+import logging
+import pickle
+import traceback
 from abc import ABC, abstractmethod
 from enum import Enum
 
-from aeroalpes.seedwork.dominio.entidades import AgregacionRaiz
 from pydispatch import dispatcher
 
-import pickle
-import logging
-import traceback
+from aeroalpes.seedwork.dominio.entidades import AgregacionRaiz
 
 
 class Lock(Enum):
@@ -100,7 +100,6 @@ def is_flask():
         return False
 
 def registrar_unidad_de_trabajo(serialized_obj):
-    from aeroalpes.config.uow import UnidadTrabajoSQLAlchemy
     from flask import session
     
 

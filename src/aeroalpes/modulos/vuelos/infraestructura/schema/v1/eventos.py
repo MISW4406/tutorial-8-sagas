@@ -1,7 +1,10 @@
+import uuid
+
 from pulsar.schema import *
+
 from aeroalpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
 from aeroalpes.seedwork.infraestructura.utils import time_millis
-import uuid
+
 
 class ReservaCreadaPayload(Record):
     id_reserva = String()

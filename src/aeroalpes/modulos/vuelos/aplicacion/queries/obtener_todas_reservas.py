@@ -5,5 +5,5 @@ class ObtenerTodasReservasPagadas(Query):
 
 class ObtenerTodasReservasHandler(QueryHandler):
 
-    def handle() -> ResultadoQuery:
+    def handle(self) -> ResultadoQuery:
         ...
