@@ -1,5 +1,5 @@
 {
-  "name": "tutorial-5-cqrs-eventos",
+  "name": "tutorial-8-sagas",
   "image": "mcr.microsoft.com/vscode/devcontainers/python:3.12",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2.12.2": {
