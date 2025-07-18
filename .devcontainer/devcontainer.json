@@ -13,5 +13,13 @@
   "initializeCommand": "mkdir -p data/bookkeeper data/zookeeper data/mysql && sudo chmod -R 777 ./data && sudo chmod -R 777 ./connectors",
   "runArgs": ["--init", "--privileged"],
   "forwardPorts": [2181, 8080, 6650],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ritwickdey.liveserver",
+        "cweijan.vscode-mysql-client2"
+      ]
+    }
+  }
 }
