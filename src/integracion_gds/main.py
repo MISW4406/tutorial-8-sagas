@@ -13,7 +13,7 @@ import time
 import traceback
 import uvicorn
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from typing import Any
 
 from .eventos import EventoConfirmacionGDS, ConfirmacionRevertida, ReservaConfirmada
