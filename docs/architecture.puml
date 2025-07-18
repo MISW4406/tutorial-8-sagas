@@ -1,0 +1,118 @@
+@startuml
+left to right direction
+
+package "src" {
+    package "aeroalpes" as aeroalpes_src {
+        package "api" as api
+        note right of api
+            Endpoints HTTP expuestos vía Flask.
+        end note
+
+        package "config" as config
+        note bottom of config
+            Configuraciones y acceso a la base de datos.
+        end note
+
+        package "ejemplos" as ejemplos
+        note bottom of ejemplos
+            Código de muestra y pruebas de concepto.
+        end note
+
+        package "modulos" as modulos {
+            package "hoteles"
+            package "sagas"
+            package "vehiculos"
+            package "vuelos" as vuelos
+        }
+        note bottom of modulos
+            Dominios de negocio implementados
+            siguiendo el estilo hexagonal
+            (aplicación, dominio e infraestructura).
+        end note
+
+        package "seedwork" as seedwork
+        note bottom of seedwork
+            Abstracciones y utilidades comunes
+            que soportan la arquitectura.
+        end note
+    }
+
+    package "cliente" as cliente {
+        package "api" as cliente_api
+        note right of cliente_api
+            Endpoints HTTP expuestos vía Flask.
+        end note
+
+        package "config" as cliente_config
+        note bottom of cliente_config
+            Configuraciones y acceso a la base de datos.
+        end note
+
+        package "ejemplos" as cliente_ejemplos
+        note bottom of cliente_ejemplos
+            Código de muestra y pruebas de concepto.
+        end note
+
+        package "modulos" as cliente_modulos
+        note bottom of cliente_modulos
+            Dominios de negocio implementados
+            siguiendo el estilo hexagonal
+            (aplicación, dominio e infraestructura).
+        end note
+
+        package "seedwork" as cliente_seedwork
+        note bottom of cliente_seedwork
+            Abstracciones y utilidades comunes
+            que soportan la arquitectura.
+        end note
+    }
+
+    package "sidecar" as sidecar_pkg {
+        package "aeroalpes" as aeroalpes_sidecar {
+            package "pb2py"
+            package "protos"
+            package "servicios"
+        }
+        package "mensajes"
+    }
+    note bottom of sidecar_pkg
+        Adaptador gRPC que comunica
+        clientes externos con AeroAlpes.
+    end note
+
+    package "notificaciones"
+    note bottom of notificaciones
+        Suscriptor de eventos para simulación
+        de notificaciones.
+    end note
+
+    package "ui" as ui_pkg {
+        package "aeroalpes" as aeroalpes_ui {
+            package "vistas"
+        }
+    }
+    note bottom of ui_pkg
+        Interfaz gráfica para resolución
+        de WebSockets.
+    end note
+
+    package "pagos"
+    note bottom of pagos
+        Microservicio que emula pagos
+        de reservas.
+    end note
+
+    package "integracion_gds"
+    note bottom of integracion_gds
+        Microservicio que emula integraciones
+        con los GDS.
+    end note
+
+    pagos -[hidden]-> integracion_gds
+    ui_pkg -[hidden]-> pagos
+    notificaciones -[hidden]-> ui_pkg
+    sidecar_pkg -[hidden]-> notificaciones
+    cliente -[hidden]-> sidecar_pkg
+    aeroalpes_src -[hidden]-> cliente
+}
+@enduml
