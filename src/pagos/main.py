@@ -1,19 +1,8 @@
 from fastapi import FastAPI
-# from cliente.config.api import app_configs, settings
-# from cliente.api.v1.router import router as v1
-
-# from cliente.modulos.infraestructura.consumidores import suscribirse_a_topico
-# from .eventos import EventoUsuario, UsuarioValidado, UsuarioDesactivado, UsuarioRegistrado, TipoCliente
-
-# from cliente.modulos.infraestructura.despachadores import Despachador
-# from cliente.seedwork.infraestructura import utils
-
 import asyncio
-import time
-import traceback
-import uvicorn
+from contextlib import asynccontextmanager
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from typing import Any
 
 from .eventos import EventoPago, PagoRevertido, ReservaPagada
@@ -28,25 +17,21 @@ class Config(BaseSettings):
 
 settings = Config()
 app_configs: dict[str, Any] = {"title": "Pagos AeroAlpes"}
+tasks = []
 
-app = FastAPI(**app_configs)
-tasks = list()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task1 = asyncio.create_task(suscribirse_a_topico("evento-pago", "sub-pagos", EventoPago))
+    task2 = asyncio.create_task(suscribirse_a_topico("comando-pagar-reserva", "sub-com-pagos-reservar", ComandoPagarReserva))
+    task3 = asyncio.create_task(suscribirse_a_topico("comando-revertir-pago", "sub-com-pagos-revertir", ComandoRevertirPago))
+    tasks.extend([task1, task2, task3])
 
-@app.on_event("startup")
-async def app_startup():
-    global tasks
-    task1 = asyncio.ensure_future(suscribirse_a_topico("evento-pago", "sub-pagos", EventoPago))
-    task2 = asyncio.ensure_future(suscribirse_a_topico("comando-pagar-reserva", "sub-com-pagos-reservar", ComandoPagarReserva))
-    task3 = asyncio.ensure_future(suscribirse_a_topico("comando-revertir-pago", "sub-com-pagos-revertir", ComandoRevertirPago))
-    tasks.append(task1)
-    tasks.append(task2)
-    tasks.append(task3)
+    yield
 
-@app.on_event("shutdown")
-def shutdown_event():
-    global tasks
     for task in tasks:
         task.cancel()
+
+app = FastAPI(lifespan=lifespan, **app_configs)
 
 @app.get("/prueba-reserva-pagada", include_in_schema=False)
 async def prueba_reserva_pagada() -> dict[str, str]:

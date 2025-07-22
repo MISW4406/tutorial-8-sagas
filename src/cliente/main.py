@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from cliente.config.api import app_configs, settings
+from cliente.config.api import app_configs
 from cliente.api.v1.router import router as v1
+from contextlib import asynccontextmanager
 
 from cliente.modulos.infraestructura.consumidores import suscribirse_a_topico
 from cliente.modulos.infraestructura.v1.eventos import EventoUsuario, UsuarioValidado, UsuarioDesactivado, UsuarioRegistrado, TipoCliente
@@ -10,31 +11,23 @@ from cliente.modulos.infraestructura.despachadores import Despachador
 from cliente.seedwork.infraestructura import utils
 
 import asyncio
-import time
-import traceback
-import uvicorn
 
+tasks = []
 
-app = FastAPI(**app_configs)
-tasks = list()
-
-@app.on_event("startup")
-async def app_startup():
-    global tasks
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     task1 = asyncio.ensure_future(suscribirse_a_topico("evento-usuarios", "sub-cliente", EventoUsuario))
     task2 = asyncio.ensure_future(suscribirse_a_topico("comando-registrar-usuario", "sub-com-registrar-usuario", ComandoRegistrarUsuario))
     task3 = asyncio.ensure_future(suscribirse_a_topico("comando-validar-usuario", "sub-com-validar-usuario", ComandoValidarUsuario))
     task4 = asyncio.ensure_future(suscribirse_a_topico("comando-desactivar-usuario", "sub-com-desactivar-usuario", ComandoDesactivarUsuario))
-    tasks.append(task1)
-    tasks.append(task2)
-    tasks.append(task3)
-    tasks.append(task4)
+    tasks.extend([task1, task2, task3, task4])
 
-@app.on_event("shutdown")
-def shutdown_event():
-    global tasks
+    yield
+
     for task in tasks:
         task.cancel()
+
+app = FastAPI(lifespan=lifespan, **app_configs)
 
 @app.get("/prueba-usuario-validado", include_in_schema=False)
 async def prueba_usuario_validado() -> dict[str, str]:

@@ -5,7 +5,6 @@ import pytest
 import json
 
 from aeroalpes.api import create_app, importar_modelos_alchemy
-from aeroalpes.config.db import init_db
 from aeroalpes.config.db import db
 
 @pytest.fixture
@@ -18,8 +17,6 @@ def app():
 
     # create the database and load test data
     with app.app_context():
-        init_db(app)
-
         from aeroalpes.config.db import db
 
         importar_modelos_alchemy()
