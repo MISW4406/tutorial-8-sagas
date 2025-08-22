@@ -1,5 +1,7 @@
 # Tutorial 8 - Sagas
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&repo=MISW4406/tutorial-8-sagas) 
+
 Repositorio con código base para la implementación del patrón Saga usando orquestación como mecanismo de orquestación.
 
 Este repositorio está basado en el repositorio de Event Sourcing visto en el tutorial 7 del curso. Por tal motivo, puede usar ese mismo repositorio para entender algunos detalles que este README no cubre.
